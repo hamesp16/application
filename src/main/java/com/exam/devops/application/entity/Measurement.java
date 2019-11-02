@@ -1,29 +1,34 @@
 package com.exam.devops.application.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
 
 @Entity
-public class Measurement {
+public class Measurement implements Serializable {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
-    private Integer deviceId;
-    private String lat;
-    private String lng;
-    private String sievert;
+    private Long lat;
+    private Long lng;
+    private Long sievert;
+
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "device_id", nullable = false)
+    private Device device;
 
     public Measurement() {
     }
 
-    public Measurement(Integer deviceId, String lat, String lng, String sievert) {
-        this.deviceId = deviceId;
+    public Measurement(Long lat, Long lng, Long sievert, Device device) {
         this.lat = lat;
         this.lng = lng;
         this.sievert = sievert;
+        this.device = device;
     }
 
     public Integer getId() {
@@ -34,46 +39,35 @@ public class Measurement {
         this.id = id;
     }
 
-    public Integer getDeviceId() {
-        return deviceId;
-    }
-
-    public void setDeviceId(Integer deviceId) {
-        this.deviceId = deviceId;
-    }
-
-    public String getLat() {
+    public Long getLat() {
         return lat;
     }
 
-    public void setLat(String lat) {
+    public void setLat(Long lat) {
         this.lat = lat;
     }
 
-    public String getLng() {
+    public Long getLng() {
         return lng;
     }
 
-    public void setLng(String lng) {
+    public void setLng(Long lng) {
         this.lng = lng;
     }
 
-    public String getSievert() {
+    public Long getSievert() {
         return sievert;
     }
 
-    public void setSievert(String sievert) {
+    public void setSievert(Long sievert) {
         this.sievert = sievert;
     }
 
-    @Override
-    public String toString() {
-        return "Measurement{" +
-                "id=" + id +
-                ", deviceId=" + deviceId +
-                ", lat='" + lat + '\'' +
-                ", lng='" + lng + '\'' +
-                ", sievert='" + sievert + '\'' +
-                '}';
+    public Device getDevice() {
+        return device;
+    }
+
+    public void setDevice(Device device) {
+        this.device = device;
     }
 }
