@@ -1,7 +1,9 @@
 language: java
 sudo: required
+before_install:
+  - chmod +x mvnw
 before_deploy:
-  - mvn package
+  - mvn clean package
 
 services:
   - docker
