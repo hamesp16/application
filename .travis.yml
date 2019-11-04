@@ -1,22 +1,22 @@
 language: java
-sudo: required
-services:
-  - docker
-script:
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin docker.io
-  - docker build . --tag application --build-arg JAR_FILE=./target/application-0.0.1-SNAPSHOT.jar
-  - docker tag application "${DOCKER_USERNAME}"/exam
+
 before_deploy:
   - mvn package
+  - chmod +x docker_push.sh
+
+services:
+  - docker
+
 deploy:
-  - provider: script
-    script: docker push "${DOCKER_USERNAME}"/exam
-    on:
-      branch: master
 - provider: heroku
   app: unique-app-name-ci
   api_key:
     secure: 5cW4PFC1511mSd6KZBwtHx4jFLxGK6t0rvZdUFX61IfgkhWZAxiV6diOw3QzzgXb4BH7y8YvmLWNIE8QstjYKgka/xJex6OBUBIR+z2b2b3QHDTmXVpS865NIuTfp0u2bqzlzq1ZW2destPzYYYPuoHrbBHvNDOoqg+461VEUfMxQ8fL/+0RWybpjqFTP2OWot/CRmmSWzElyEw2I9M3CH2UMRlhwUxnZmIx8UKAVqC1b2yFWLs/uScrzeQAeifbz7meT8iQog48Y9DuurogUCf9W8hc5Xs/Y43uGl5Qs6cV2PRoFVvsmRNtb/CsTh50DpursTpWWGHhFYbd4DAgA1qYg9YcnaLkyYSrzzFIQPLAVma6ed80/mxGvq4QZBq64eYgf3jRqnyADEOJ70usXcpgbXZCAx/0GGH/BMbD4roMSBXupdVn59EMVA2aeJ5nvpAN5wZCn2IlwzToTF5l1/PQGPwgv/aPAMY+rQVuWIqm/4oktbvjJNv9//WIWvoakYDQ29mFLL2pSZqqDNkMGavM9HV0WBk9noG+gNuUeFryqRQKyqWGAzEI+yG48tkTccAbosLLLAbpYI+HP836uKePFz8NRoHzkn/vrdswMuxvdhv0h0dKeInc4hF+X5ECm9qyCo1ov9DifyIjCl34Qs5U8vY+xBxM/kza2aWWhGw=
+- provider: script
+  script: bash docker_push
+  on:
+    branch: master
+
 env:
   global:
   - secure: UeGzZ1in2MYG+WsgMNooaMwhKyOtapCuQXDZn27ighNIQYlBv3mgSXYa47OU2ZZO//gr4pLjcg1f4TyFHiqVruJ1TIeYSjLSC9n4TFUf88BOUzqi/w9Oqb78g6vVWP5mAd4oMy0hvevxHbauMrTw//nVqrnvvCZLpqQG7W8bVBHXQ2Av7P+i9c4Q+fpCZ9gMt9+VEkaBrq3/6poz5XgTmv6SHF6VIJSbi9kBCGwfl9yDSDsekpWXVU+E/2lpUr9iG+3PAgpJnOo6VBFuL+wRHnqqaWGQQbGa8JpRJBsclA0VQiZ37XlbEXGswjxDSj0J0+0tzXYgqSkpUXr2dgzFz6h+8BA1A7wB//lOY56HOF96SFtPvFVMFxcz08AlsD2zpi9T0iBoEAAvyJGAOaRoyv3LoTi5yhbnRwseIQcIE3c2qcTi4LWaC69t6zes+F0LlKpLbTgb4sY1RmPsxMnGfr6lpy885oaro/tMixfgU0I4H3vyc1VuU3z3dUJr6oUDdyt2RC7T6R4EAb9/X6nSOzwXw+2R2iTMK2OTfjBSPNSKPr3OLrrVZSuzz9aTdvt52e85DXiqR5GxkrEyciz7BADZFvYYX7MPQe/CykkNtJReyQWsiGZTgzvCH7FsUE9wkd9t0u0JBR7raEATLH/P7PJzp44VZ54reJGwexWgIck=
