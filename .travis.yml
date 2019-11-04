@@ -4,9 +4,9 @@ before_install:
 services:
   - docker
 deploy:
-  - provider: script
-    skip_cleanup: true
-    script: bash docker_push.sh
+- provider: script
+  skip_cleanup: true
+  script: bash docker_push.sh
 - provider: heroku
   app: unique-app-name-ci
   api_key:
