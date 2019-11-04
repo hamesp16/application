@@ -2,8 +2,9 @@ language: java
 sudo: required
 before_install:
   - chmod +x mvnw
-before_deploy:
-  - mvn clean package
+
+script:
+  - ./mvnw clean install -B
 
 services:
   - docker
