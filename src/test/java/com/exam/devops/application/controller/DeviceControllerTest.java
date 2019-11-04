@@ -33,7 +33,7 @@ public class DeviceControllerTest {
     }
 
     @Test
-    public void testCreateAndGet() {
+    public void testCreateAndGetDevice() {
         Device device = new Device();
         device.setModelName("GeigerCounter XTREME 2000");
         device.setSerialNumber("GCX12345");
