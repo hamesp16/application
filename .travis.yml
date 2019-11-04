@@ -1,4 +1,12 @@
 language: java
+
+before_deploy:
+  - mvn package
+  - chmod +x docker_push.sh
+
+services:
+  - docker
+
 deploy:
 - provider: heroku
   app: unique-app-name-ci
@@ -8,6 +16,7 @@ deploy:
   script: bash docker_push
   on:
     branch: master
+
 env:
   global:
   - secure: UeGzZ1in2MYG+WsgMNooaMwhKyOtapCuQXDZn27ighNIQYlBv3mgSXYa47OU2ZZO//gr4pLjcg1f4TyFHiqVruJ1TIeYSjLSC9n4TFUf88BOUzqi/w9Oqb78g6vVWP5mAd4oMy0hvevxHbauMrTw//nVqrnvvCZLpqQG7W8bVBHXQ2Av7P+i9c4Q+fpCZ9gMt9+VEkaBrq3/6poz5XgTmv6SHF6VIJSbi9kBCGwfl9yDSDsekpWXVU+E/2lpUr9iG+3PAgpJnOo6VBFuL+wRHnqqaWGQQbGa8JpRJBsclA0VQiZ37XlbEXGswjxDSj0J0+0tzXYgqSkpUXr2dgzFz6h+8BA1A7wB//lOY56HOF96SFtPvFVMFxcz08AlsD2zpi9T0iBoEAAvyJGAOaRoyv3LoTi5yhbnRwseIQcIE3c2qcTi4LWaC69t6zes+F0LlKpLbTgb4sY1RmPsxMnGfr6lpy885oaro/tMixfgU0I4H3vyc1VuU3z3dUJr6oUDdyt2RC7T6R4EAb9/X6nSOzwXw+2R2iTMK2OTfjBSPNSKPr3OLrrVZSuzz9aTdvt52e85DXiqR5GxkrEyciz7BADZFvYYX7MPQe/CykkNtJReyQWsiGZTgzvCH7FsUE9wkd9t0u0JBR7raEATLH/P7PJzp44VZ54reJGwexWgIck=
