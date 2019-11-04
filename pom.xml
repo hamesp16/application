@@ -12,6 +12,7 @@
     <artifactId>application</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>application</name>
+    <packaging>jar</packaging>
     <description>Application for devops exam</description>
 
     <properties>
