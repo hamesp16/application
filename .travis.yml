@@ -13,7 +13,7 @@ deploy:
   api_key:
     secure: 5cW4PFC1511mSd6KZBwtHx4jFLxGK6t0rvZdUFX61IfgkhWZAxiV6diOw3QzzgXb4BH7y8YvmLWNIE8QstjYKgka/xJex6OBUBIR+z2b2b3QHDTmXVpS865NIuTfp0u2bqzlzq1ZW2destPzYYYPuoHrbBHvNDOoqg+461VEUfMxQ8fL/+0RWybpjqFTP2OWot/CRmmSWzElyEw2I9M3CH2UMRlhwUxnZmIx8UKAVqC1b2yFWLs/uScrzeQAeifbz7meT8iQog48Y9DuurogUCf9W8hc5Xs/Y43uGl5Qs6cV2PRoFVvsmRNtb/CsTh50DpursTpWWGHhFYbd4DAgA1qYg9YcnaLkyYSrzzFIQPLAVma6ed80/mxGvq4QZBq64eYgf3jRqnyADEOJ70usXcpgbXZCAx/0GGH/BMbD4roMSBXupdVn59EMVA2aeJ5nvpAN5wZCn2IlwzToTF5l1/PQGPwgv/aPAMY+rQVuWIqm/4oktbvjJNv9//WIWvoakYDQ29mFLL2pSZqqDNkMGavM9HV0WBk9noG+gNuUeFryqRQKyqWGAzEI+yG48tkTccAbosLLLAbpYI+HP836uKePFz8NRoHzkn/vrdswMuxvdhv0h0dKeInc4hF+X5ECm9qyCo1ov9DifyIjCl34Qs5U8vY+xBxM/kza2aWWhGw=
 - provider: script
-  script: bash docker_push
+  script: "./docker_push.sh"
   on:
     branch: master
 
