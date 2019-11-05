@@ -4,6 +4,8 @@ import com.exam.devops.application.dao.DeviceRepository;
 import com.exam.devops.application.dao.MeasurementRepository;
 import com.exam.devops.application.entity.Device;
 import com.exam.devops.application.entity.Measurement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,8 @@ import java.util.Optional;
 
 @RestController
 public class DeviceController {
+
+    private Logger logger = LoggerFactory.getLogger(DeviceController.class);
 
     private final DeviceRepository deviceRepository;
     private final MeasurementRepository measurementRepository;
@@ -24,11 +28,13 @@ public class DeviceController {
 
     @GetMapping("/devices")
     public ResponseEntity<List<Device>> getDevices() {
+        logger.info("Fetching all devices");
         return ResponseEntity.ok(deviceRepository.findAll());
     }
 
     @PostMapping(value = "/devices")
     public ResponseEntity<Integer> createDevice(@RequestBody Device device) {
+        logger.info("Creating new device [{}]", device.toString());
         if (device.getId() != null) {
             return ResponseEntity.badRequest().build();
         }

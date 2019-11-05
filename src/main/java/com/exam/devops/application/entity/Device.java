@@ -59,4 +59,14 @@ public class Device implements Serializable {
     public void setMeasurements(List<Measurement> measurements) {
         this.measurements = measurements;
     }
+
+    @Override
+    public String toString() {
+        return "Device{" +
+                "id=" + id +
+                ", modelName='" + modelName + '\'' +
+                ", serialNumber='" + serialNumber + '\'' +
+                ", measurements=" + measurements +
+                '}';
+    }
 }
