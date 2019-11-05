@@ -36,6 +36,8 @@ public class DeviceController {
     public ResponseEntity<Integer> createDevice(@RequestBody Device device) {
         logger.info("Creating new device [{}]", device.toString());
         if (device.getId() != null) {
+            //Logging to warn level only to show the level in the logs. Would log this to info normally
+            logger.warn("device.Id is set. This can not be set when creating new device");
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(deviceRepository.save(device).getId());
@@ -44,27 +46,31 @@ public class DeviceController {
     @PostMapping(value = "/devices/{deviceId}/measurements")
     public ResponseEntity<Void> createMeasurement(@RequestBody Measurement measurement, @PathVariable Integer deviceId) {
         if (measurement.getId() != null) {
+            //Logging to warn level only to show the level in the logs. Would log this to info normally
+            logger.warn("measurement.Id is set. This can not be set when creating new measurement");
             return ResponseEntity.badRequest().build();
         }
         if (deviceId == null) {
+            logger.info("Trying to create new measurement on deviceId [{}]", deviceId);
             return ResponseEntity.notFound().build();
         }
         Optional<Device> device = deviceRepository.findById(deviceId);
         if (device.isPresent()) {
             measurement.setDevice(device.get());
         } else {
+            logger.info("Unable to find device with deviceId [{}]", deviceId);
             return ResponseEntity.notFound().build();
         }
         measurementRepository.save(measurement);
+        logger.info("Measurement [{}] created", measurement.toString());
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping(value = "/devices/{deviceId}/measurements")
     public ResponseEntity<List<Measurement>> getMeasurements(@PathVariable Integer deviceId) {
+        logger.info("Fetching all measurements for devide with id [{}]", deviceId);
         Optional<Device> device = deviceRepository.findById(deviceId);
-        if (!device.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok().body(device.get().getMeasurements());
+        return device.map(value -> ResponseEntity.ok().body(value.getMeasurements())).orElseGet(() ->
+                ResponseEntity.notFound().build());
     }
 }

@@ -5,7 +5,9 @@
     <appender name="LogzioLogbackAppender" class="io.logz.logback.LogzioLogbackAppender">
         <token>$LOGZ_TOKEN</token>
         <logzioUrl>$LOGZ_URL</logzioUrl>
-        <logzioType>exam</logzioType>
+        <logzioType>java</logzioType>
+        <addHostname>true</addHostname>
+        <format>json</format>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>DEBUG</level>
         </filter>
